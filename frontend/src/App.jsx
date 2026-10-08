@@ -104,7 +104,7 @@ useEffect(() => {
 
     });
 
-  }, 700);
+  }, 1000);
 
   return () => {
     clearInterval(interval);

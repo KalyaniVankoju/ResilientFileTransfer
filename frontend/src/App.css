@@ -2,229 +2,307 @@
   box-sizing: border-box;
 }
 
-
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #f4f6f8;
+  background: #f4f7fb;
+  color: #1f2937;
 }
-
 
 .app {
   min-height: 100vh;
 }
 
+/* =========================
+   HEADER
+========================= */
 
 header {
-  padding: 35px;
+  padding: 42px 25px;
   text-align: center;
-  background: #1f2937;
+  background: linear-gradient(135deg, #172033, #26364f);
   color: white;
+  border-bottom: 4px solid #2563eb;
 }
-
 
 header h1 {
   margin: 0;
-  font-size: 32px;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
-
 
 header p {
-  margin-top: 10px;
-  color: #d1d5db;
+  margin: 12px 0 0;
+  color: #cbd5e1;
+  font-size: 17px;
 }
 
+/* =========================
+   MAIN
+========================= */
 
 main {
-  max-width: 850px;
-  margin: 40px auto;
-  padding: 0 20px;
+  max-width: 1000px;
+  margin: 45px auto;
+  padding: 0 24px;
 }
 
+/* =========================
+   CARDS
+========================= */
 
 .card {
-  background: white;
-  padding: 30px;
-  margin-bottom: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  padding: 32px;
+  margin-bottom: 28px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.07);
 }
-
 
 .card h2 {
-  margin-top: 0;
-  margin-bottom: 25px;
+  margin: 0 0 28px;
+  color: #172033;
+  font-size: 22px;
+  font-weight: 700;
 }
 
+/* =========================
+   FORM
+========================= */
 
 label {
   display: block;
-  margin-top: 18px;
-  margin-bottom: 7px;
-  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 700;
 }
-
 
 input,
 select {
   width: 100%;
-  padding: 11px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1f2937;
   font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+input:focus,
+select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
 
-button {
-  width: 100%;
-  margin-top: 25px;
-  padding: 13px;
-  border: none;
-  border-radius: 7px;
-  background: #2563eb;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
+/* File input */
+
+input[type="file"] {
+  padding: 10px;
   cursor: pointer;
 }
 
+/* Number inputs */
+
+input[type="number"] {
+  appearance: textfield;
+}
+
+/* =========================
+   PROTOCOL DISPLAY
+========================= */
+
+.protocol-display {
+  padding: 12px 14px;
+  margin-bottom: 15px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: #1e3a5f;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+button {
+  width: 100%;
+  margin-top: 28px;
+  padding: 14px;
+  border: none;
+  border-radius: 9px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition:
+    background 0.2s,
+    transform 0.15s,
+    box-shadow 0.2s;
+}
+
+button:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(37, 99, 235, 0.25);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+}
 
 button:disabled {
-  background: #9ca3af;
+  background: #94a3b8;
   cursor: not-allowed;
 }
 
+/* =========================
+   RESULTS
+========================= */
 
 .results {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
+  gap: 16px;
 }
-
 
 .results div {
-  padding: 15px;
-  background: #f3f4f6;
-  border-radius: 8px;
+  padding: 18px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
+.results div:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(15, 23, 42, 0.06);
+}
 
 .results span {
   display: block;
-  color: #6b7280;
-  font-size: 14px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  color: #64748b;
+  font-size: 13px;
 }
-
 
 .results strong {
-  font-size: 18px;
+  color: #172033;
+  font-size: 19px;
 }
 
+/* =========================
+   FILE INTEGRITY
+========================= */
 
 .integrity {
   margin-top: 20px;
-  padding: 15px;
+  padding: 16px;
   background: #ecfdf5;
-  border-radius: 8px;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  color: #166534;
   text-align: center;
 }
-
 
 .integrity strong {
   margin-left: 8px;
 }
 
-
-/* Packet activity */
+/* =========================
+   PACKET ACTIVITY
+========================= */
 
 .activity {
   max-height: 500px;
   overflow-y: auto;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
 }
-
 
 .event {
   display: grid;
   grid-template-columns: 60px 120px 1fr;
   gap: 10px;
   align-items: center;
-
-  padding: 12px 15px;
-
+  padding: 13px 16px;
   border-bottom: 1px solid #e5e7eb;
-
-  background: #f9fafb;
+  background: #ffffff;
 }
-
 
 .event:last-child {
   border-bottom: none;
 }
 
-
 .event-number {
-  color: #9ca3af;
+  color: #94a3b8;
   font-size: 13px;
 }
 
-
 .packet-number {
-  font-weight: bold;
+  color: #1e293b;
+  font-weight: 700;
 }
-
 
 .event-label {
-  color: #374151;
+  color: #475569;
 }
-
 
 .event.success {
-  background: #ecfdf5;
+  background: #f0fdf4;
 }
-
 
 .event.warning {
   background: #fffbeb;
 }
 
-
 .event.lost {
   background: #fef2f2;
 }
-/* Network Flow */
+
+/* =========================
+   NETWORK FLOW
+========================= */
 
 .network-flow {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+  gap: 18px;
   margin-top: 30px;
+  min-height: 230px;
 }
-
 
 .network-node {
-  width: 170px;
-  padding: 20px 10px;
+  width: 190px;
+  padding: 22px 14px;
   text-align: center;
-  background: #f3f4f6;
-  border: 2px solid #d1d5db;
-  border-radius: 12px;
+  background: #f8fafc;
+  border: 2px solid #cbd5e1;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+  z-index: 2;
 }
-
 
 .network-node.network {
   border-color: #f59e0b;
   background: #fffbeb;
 }
 
-
 .node-icon {
-  width: 50px;
-  height: 50px;
-  margin: 0 auto 10px;
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 12px;
 
   display: flex;
   align-items: center;
@@ -236,63 +314,77 @@ button:disabled {
   color: white;
 
   font-size: 20px;
-  font-weight: bold;
-}
+  font-weight: 700;
 
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+}
 
 .network-node.network .node-icon {
   background: #f59e0b;
+  box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
 }
 
-
 .network-node h3 {
-  margin: 5px 0;
+  margin: 6px 0;
+  color: #1e293b;
   font-size: 17px;
 }
 
-
 .network-node p {
-  margin: 5px 0;
-  color: #6b7280;
+  margin: 6px 0;
+  color: #64748b;
   font-size: 13px;
 }
 
+/* =========================
+   NETWORK CONNECTION
+========================= */
 
 .network-connection {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 80px;
+  min-width: 90px;
+  z-index: 1;
 }
 
-
 .connection-line {
+  color: #64748b;
   font-size: 30px;
   font-weight: bold;
 }
 
-
 .network-connection span {
+  color: #64748b;
   font-size: 12px;
-  color: #6b7280;
+  font-weight: 600;
 }
 
+/* =========================
+   NETWORK STATUS
+========================= */
 
 .network-status {
   margin-top: 25px;
-  padding: 15px;
+  padding: 16px;
 
   text-align: center;
 
-  background: #f3f4f6;
-  border-radius: 8px;
-}
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
 
+  color: #475569;
+}
 
 .network-status strong {
   margin-right: 8px;
+  color: #1e293b;
 }
 
+/* =========================
+   ACK FLOW
+========================= */
 
 .ack-flow {
   display: flex;
@@ -301,19 +393,24 @@ button:disabled {
   gap: 25px;
 
   margin-top: 20px;
-  padding: 12px;
+  padding: 14px;
 
   background: #eff6ff;
-  border-radius: 8px;
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
 
   color: #1d4ed8;
-  font-weight: bold;
+  font-weight: 700;
 }
-
 
 .ack-arrow {
   font-size: 18px;
 }
+
+/* =========================
+   SIMULATION STATUS
+========================= */
+
 .simulation-status {
   display: flex;
   justify-content: center;
@@ -321,11 +418,13 @@ button:disabled {
   gap: 15px;
 
   margin: 20px 0;
-  padding: 12px 18px;
+  padding: 13px 18px;
 
-  background: #f3f4f6;
-  border-radius: 8px;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  border-radius: 9px;
 
+  color: #1e3a8a;
   font-size: 14px;
 }
 
@@ -334,13 +433,12 @@ button:disabled {
 }
 
 .simulation-status span {
-  color: #374151;
+  color: #475569;
 }
-/* Packet simulation animation */
 
-.network-flow {
-  position: relative;
-}
+/* =========================
+   PACKET SIMULATION
+========================= */
 
 .moving-packet {
   position: absolute;
@@ -359,43 +457,27 @@ button:disabled {
   border-radius: 50%;
 
   font-size: 11px;
-  font-weight: bold;
+  font-weight: 700;
 
   z-index: 10;
 
   pointer-events: none;
+
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
 }
 
-
-/* DATA: Sender → Receiver */
+/* =========================
+   DATA: SENDER → RECEIVER
+========================= */
 
 .data-forward {
   background: #2563eb;
   color: white;
 
-  animation: dataForward 0.7s linear forwards;
+  animation: dataForward 1s linear forwards;
 }
 
 @keyframes dataForward {
-
-  0% {
-    left: 15%;
-    opacity: 1;
-  }
-
-  45% {
-    left: 50%;
-    opacity: 1;
-  }
-
-  100% {
-    left: 85%;
-    opacity: 1;
-  }
-
-}
-@keyframes dataForward {
-
   0% {
     left: 8%;
     opacity: 1;
@@ -410,11 +492,11 @@ button:disabled {
     left: 82%;
     opacity: 1;
   }
-
 }
 
-
-/* DATA reached receiver */
+/* =========================
+   DATA REACHED RECEIVER
+========================= */
 
 .data-arrived {
   background: #16a34a;
@@ -422,11 +504,10 @@ button:disabled {
 
   left: 82%;
 
-  animation: packetArrived 0.7s ease-in-out;
+  animation: packetArrived 1s ease-in-out;
 }
 
 @keyframes packetArrived {
-
   0% {
     transform: scale(0.7);
     opacity: 0.5;
@@ -441,11 +522,11 @@ button:disabled {
     transform: scale(1);
     opacity: 1;
   }
-
 }
 
-
-/* ACK: Receiver → Sender */
+/* =========================
+   ACK
+========================= */
 
 .ack-start,
 .ack-back {
@@ -453,23 +534,21 @@ button:disabled {
   color: white;
 }
 
-
 /* ACK starts from receiver and travels backward */
 
 .ack-start {
-  left: 85%;
+  left: 82%;
 
-  animation: ackBack 0.7s linear forwards;
+  animation: ackBack 1s linear forwards;
 }
 
 .ack-back {
   left: 15%;
 
-  animation: ackReceived 0.7s ease-in-out;
+  animation: ackReceived 1s ease-in-out;
 }
 
 @keyframes ackBack {
-
   0% {
     left: 82%;
     opacity: 1;
@@ -479,11 +558,9 @@ button:disabled {
     left: 8%;
     opacity: 1;
   }
-
 }
 
 @keyframes ackReceived {
-
   0% {
     transform: scale(0.7);
   }
@@ -495,22 +572,21 @@ button:disabled {
   100% {
     transform: scale(1);
   }
-
 }
 
-
-/* Lost packet */
+/* =========================
+   LOST PACKET
+========================= */
 
 .data-lost,
 .ack-lost {
   background: #dc2626;
   color: white;
 
-  animation: packetLost 0.7s ease-in forwards;
+  animation: packetLost 1s ease-in forwards;
 }
 
 @keyframes packetLost {
-
   0% {
     left: 8%;
     opacity: 1;
@@ -526,16 +602,58 @@ button:disabled {
     opacity: 0;
     transform: scale(0.4);
   }
-
 }
-.protocol-display {
-  padding: 10px 12px;
-  margin-bottom: 15px;
 
-  background: #f9fafb;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+/* =========================
+   RESPONSIVE
+========================= */
 
-  color: #374151;
-  font-size: 14px;
+@media (max-width: 768px) {
+  header {
+    padding: 32px 18px;
+  }
+
+  header h1 {
+    font-size: 27px;
+  }
+
+  header p {
+    font-size: 15px;
+  }
+
+  main {
+    margin: 30px auto;
+    padding: 0 15px;
+  }
+
+  .card {
+    padding: 22px;
+  }
+
+  .results {
+    grid-template-columns: 1fr;
+  }
+
+  .network-flow {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .network-node {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .network-connection {
+    transform: rotate(90deg);
+  }
+
+  .ack-flow {
+    flex-wrap: wrap;
+  }
+
+  .event {
+    grid-template-columns: 45px 100px 1fr;
+    font-size: 13px;
+  }
 }
