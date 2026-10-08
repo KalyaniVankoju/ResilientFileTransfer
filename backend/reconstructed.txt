@@ -1,0 +1,1 @@
+Computer Networks enables communication between different devices. Reliable data transfer ensures that information reaches the destination correctly even when packets are lost.
