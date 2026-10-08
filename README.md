@@ -11,12 +11,15 @@ A web-based interface provides a visual representation of the packet transmissio
 ## Live Demo
 
 ### Frontend
+
 https://resilient-file-transfer.vercel.app/
 
 ### Backend API
+
 https://resilientfiletransfer.onrender.com/
 
 ### API Documentation
+
 https://resilientfiletransfer.onrender.com/docs
 
 ---
@@ -103,47 +106,63 @@ This project implements a simplified reliable file-transfer system using **Stop-
                             |
                             v
                     Reconstructed File
-ACK Flow
+```
+
+### ACK Flow
+
+```text
 Sender                         Receiver
   |                               |
   | -------- DATA --------------> |
   |                               |
   | <--------- ACK -------------- |
   |                               |
+```
 
 If the DATA packet or ACK is lost, the sender waits for a timeout and retransmits the packet.
 
-Stop-and-Wait ARQ
+---
 
-The project uses Stop-and-Wait ARQ as its reliability mechanism.
+## Stop-and-Wait ARQ
+
+The project uses **Stop-and-Wait ARQ** as its reliability mechanism.
 
 For every packet:
 
-Sender transmits one DATA packet.
-Receiver checks the sequence number.
-Receiver accepts the packet if it is the expected packet.
-Receiver sends an ACK.
-Sender waits for the ACK.
-If the ACK is received, the sender transmits the next packet.
-If the DATA packet or ACK is lost, the sender waits until timeout.
-The sender retransmits the packet.
-Duplicate packets are detected by the receiver.
+1. Sender transmits one DATA packet.
+2. Receiver checks the sequence number.
+3. Receiver accepts the packet if it is the expected packet.
+4. Receiver sends an ACK.
+5. Sender waits for the ACK.
+6. If the ACK is received, the sender transmits the next packet.
+7. If the DATA packet or ACK is lost, the sender waits until timeout.
+8. The sender retransmits the packet.
+9. Duplicate packets are detected by the receiver.
 
 This continues until the complete file has been transferred.
 
-Packet Structure
+---
+
+## Packet Structure
 
 Each data packet contains:
 
+```text
 Sequence Number
 Data
+```
 
 The sequence number allows the receiver to determine:
 
-Which packet is expected
-Whether a packet is a duplicate
-The correct order for file reconstruction
-File Transfer Process
+- Which packet is expected
+- Whether a packet is a duplicate
+- The correct order for file reconstruction
+
+---
+
+## File Transfer Process
+
+```text
 Original File
       |
       v
@@ -183,96 +202,126 @@ Integrity Check
       |
       v
 Reconstructed File
-Reliability Features
-Sequence Numbers
+```
 
-Every packet is assigned a sequence number beginning from 1.
+---
 
-Acknowledgements
+## Reliability Features
+
+### Sequence Numbers
+
+Every packet is assigned a sequence number beginning from `1`.
+
+### Acknowledgements
 
 The receiver sends an ACK after successfully receiving a packet.
 
-Timeout
+### Timeout
 
 If the sender does not receive an ACK within the configured timeout period, the packet is retransmitted.
 
-Retransmission
+### Retransmission
 
 Lost DATA packets and packets whose ACKs are lost are retransmitted.
 
-Duplicate Detection
+### Duplicate Detection
 
 If a retransmitted packet reaches the receiver after the original packet was already received, it is identified as a duplicate.
 
-File Reassembly
+### File Reassembly
 
 Packets are sorted according to their sequence numbers and combined to reconstruct the original file.
 
-File Integrity
+### File Integrity
 
 The reconstructed file is compared with the original file to verify that the transfer was successful.
 
-Performance Evaluation
+---
+
+## Performance Evaluation
 
 The protocol was tested with different packet-loss rates.
 
-Test configuration:
+### Test Configuration
 
-Packet size: 30 bytes
-Timeout: 0.01 seconds
-Number of packets: 21
-Loss Rate	Packets	Total Transmissions	Retransmissions	Duplicate Packets	Completion Time	Integrity
-0%	21	21	0	0	0.0000 s	PASS
-10%	21	24	3	2	0.0316 s	PASS
-20%	21	31	10	7	0.1047 s	PASS
-30%	21	46	25	12	0.2647 s	PASS
-50%	21	109	88	30	0.9133 s	PASS
-Observation
+- **Packet size:** `30 bytes`
+- **Timeout:** `0.01 seconds`
+- **Number of packets:** `21`
+
+| Loss Rate | Packets | Total Transmissions | Retransmissions | Duplicate Packets | Completion Time | Integrity |
+|:---------:|:-------:|:-------------------:|:---------------:|:-----------------:|:---------------:|:---------:|
+| 0%  | 21 | 21  | 0  | 0  | 0.0000 s | PASS |
+| 10% | 21 | 24  | 3  | 2  | 0.0316 s | PASS |
+| 20% | 21 | 31  | 10 | 7  | 0.1047 s | PASS |
+| 30% | 21 | 46  | 25 | 12 | 0.2647 s | PASS |
+| 50% | 21 | 109 | 88 | 30 | 0.9133 s | PASS |
+
+### Observation
 
 As the packet-loss rate increases:
 
-The number of retransmissions increases.
-The number of duplicate packets increases.
-The completion time increases.
-More network transmissions are required.
-File integrity remains PASS because Stop-and-Wait ARQ provides reliable delivery.
-Example
+- The number of retransmissions increases.
+- The number of duplicate packets increases.
+- The completion time increases.
+- More network transmissions are required.
+- File integrity remains **PASS** because Stop-and-Wait ARQ provides reliable delivery.
 
-For a 611 byte file with a packet size of 30 bytes:
+---
 
+## Example
+
+For a `611 byte` file with a packet size of `30 bytes`:
+
+```text
 Number of packets = ceil(611 / 30)
 
-                = 21 packets
+                  = 21 packets
+```
 
-Therefore, the file is divided into 21 packets.
+Therefore, the file is divided into **21 packets**.
 
-The final packet contains the remaining 11 bytes.
+The final packet contains the remaining **11 bytes**.
 
-Technology Stack
-Backend
-Python
-FastAPI
-Uvicorn
-Frontend
-React
-JavaScript
-Vite
-CSS
-Networking Concepts
-Packetization
-Sequence Numbers
-Acknowledgements
-Stop-and-Wait ARQ
-Timeout
-Retransmission
-Packet Loss
-Duplicate Detection
-File Reassembly
-Data Integrity
-Deployment
-Vercel — Frontend
-Render — Backend
-Project Structure
+---
+
+## Technology Stack
+
+### Backend
+
+- Python
+- FastAPI
+- Uvicorn
+
+### Frontend
+
+- React
+- JavaScript
+- Vite
+- CSS
+
+### Networking Concepts
+
+- Packetization
+- Sequence Numbers
+- Acknowledgements
+- Stop-and-Wait ARQ
+- Timeout
+- Retransmission
+- Packet Loss
+- Duplicate Detection
+- File Reassembly
+- Data Integrity
+
+### Deployment
+
+- Vercel — Frontend
+- Render — Backend
+
+---
+
+## Project Structure
+
+```text
 ResilientFileTransfer/
 │
 ├── backend/
@@ -295,7 +344,11 @@ ResilientFileTransfer/
 │   ├── main.py
 │   ├── requirements.txt
 │   ├── sample.txt
-│   └── tests
+│   ├── test_network_transfer.py
+│   ├── test_protocol.py
+│   ├── test_reassembly.py
+│   ├── test_splitter.py
+│   └── test_stop_and_wait.py
 │
 ├── frontend/
 │   ├── public/
@@ -310,83 +363,124 @@ ResilientFileTransfer/
 │
 ├── .gitignore
 └── README.md
-Running the Backend Locally
+```
+
+---
+
+## Running the Backend Locally
 
 Navigate to the backend directory:
 
+```powershell
 cd backend
+```
 
-Create and activate a virtual environment:
+### Create and Activate a Virtual Environment
 
-Windows
+For Windows:
+
+```powershell
 python -m venv venv
 .\venv\Scripts\Activate.ps1
+```
 
-Install dependencies:
+### Install Dependencies
 
+```powershell
 pip install -r requirements.txt
+```
 
-Start the FastAPI server:
+### Start the FastAPI Server
 
+```powershell
 uvicorn main:app --reload
+```
 
 The backend will be available at:
 
+```text
 http://127.0.0.1:8000
+```
 
 Swagger API documentation:
 
+```text
 http://127.0.0.1:8000/docs
-Running the Frontend Locally
+```
+
+---
+
+## Running the Frontend Locally
 
 Navigate to the frontend directory:
 
+```powershell
 cd frontend
+```
 
-Install dependencies:
+### Install Dependencies
 
+```powershell
 npm install
+```
 
-Start the development server:
+### Start the Development Server
 
+```powershell
 npm run dev
+```
 
 The frontend will normally be available at:
 
+```text
 http://localhost:5173
-API Endpoint
-Stop-and-Wait File Transfer
+```
+
+---
+
+## API Endpoint
+
+### Stop-and-Wait File Transfer
+
+```text
 POST /transfer/stop-and-wait
+```
 
 The endpoint accepts:
 
-File
-Loss rate
-Packet size
-Timeout
+- File
+- Loss rate
+- Packet size
+- Timeout
 
-Example parameters:
+### Example Parameters
 
+```text
 loss_rate = 0.2
 packet_size = 30
 timeout = 0.01
+```
 
 The API returns information including:
 
-Filename
-File size
-Number of packets
-Loss rate
-Total transmissions
-Retransmissions
-Duplicate packets
-Completion time
-File integrity
-Transfer log
-Web Visualization
+- Filename
+- File size
+- Number of packets
+- Loss rate
+- Total transmissions
+- Retransmissions
+- Duplicate packets
+- Completion time
+- File integrity
+- Transfer log
+
+---
+
+## Web Visualization
 
 The frontend visually represents:
 
+```text
 Sender
    |
    | DATA
@@ -399,97 +493,99 @@ Receiver
    | ACK
    v
 Sender
+```
 
 The interface displays:
 
-DATA packet movement
-ACK movement
-Lost packets
-Retransmissions
-Packet numbers
-Network status
-Transfer statistics
-File integrity result
+- DATA packet movement
+- ACK movement
+- Lost packets
+- Retransmissions
+- Packet numbers
+- Network status
+- Transfer statistics
+- File integrity result
 
 This allows the reliability mechanism to be observed instead of only viewing numerical results.
 
-Testing
+---
+
+## Testing
 
 The project includes tests for major components such as:
 
-File splitting
-Packet reassembly
-Network transfer
-Stop-and-Wait protocol
-Protocol performance
+- File splitting
+- Packet reassembly
+- Network transfer
+- Stop-and-Wait protocol
+- Protocol performance
 
-Example:
+### Example
 
+From the `backend` directory:
+
+```powershell
 python test_protocol.py
+```
 
 Expected result includes:
 
+```text
 FILE INTEGRITY: PASS
-Limitations
+```
 
-This project is a controlled simulation and implementation of reliable file transfer, rather than a replacement for a real transport-layer protocol such as TCP.
+---
+
+## Limitations
+
+This project is a **controlled simulation and implementation of reliable file transfer**, rather than a replacement for a real transport-layer protocol such as TCP.
 
 The unreliable network is simulated in software using a configurable packet-loss rate.
 
 The current implementation focuses on:
 
+```text
 Stop-and-Wait ARQ
+```
 
 rather than implementing a complete production-grade transport protocol.
 
-Future Enhancements
+---
+
+## Future Enhancements
 
 Possible future improvements include:
 
-Go-Back-N ARQ
-Selective Repeat ARQ
-Packet delay simulation
-Packet reordering simulation
-Congestion control
-Throughput analysis
-Bandwidth-delay analysis
-Real socket-based communication
-Wireshark traffic analysis
-More detailed performance graphs
-Project Outcome
+- Go-Back-N ARQ
+- Selective Repeat ARQ
+- Packet delay simulation
+- Packet reordering simulation
+- Congestion control
+- Throughput analysis
+- Bandwidth-delay analysis
+- Real socket-based communication
+- Wireshark traffic analysis
+- More detailed performance graphs
+
+---
+
+## Project Outcome
 
 The project demonstrates how reliability can be introduced over an unreliable packet-switched network using fundamental computer networking mechanisms.
 
 Despite packet and ACK losses, the protocol successfully retransmits missing data and reconstructs the original file with verified integrity.
 
-Authors
+---
 
-Kalyani Vankoju
+## Author
 
-Computer Science and Engineering
+**Kalyani Vankoju**
 
+Computer Science and Engineering  
 GRIET
 
-License
+---
+
+## License
 
 This project is developed for academic and educational purposes.
-
-
-### One important correction before you paste it
-
-In the **Project Structure**, don't literally create a `tests` folder just because the README shows one. Your current backend has the test files directly under `backend/`.
-
-So after pasting, change:
-
-```text
-├── sample.txt
-└── tests
-
-to:
-
-├── sample.txt
-├── test_network_transfer.py
-├── test_protocol.py
-├── test_reassembly.py
-├── test_splitter.py
-└── test_stop_and_wait.py
