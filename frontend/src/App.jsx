@@ -45,7 +45,7 @@ const [isSimulating, setIsSimulating] = useState(false);
     try {
 
       const response = await fetch(
-        "http://127.0.0.1:8000/transfer/stop-and-wait",
+        "https://resilientfiletransfer.onrender.com/transfer/stop-and-wait",
         {
           method: "POST",
           body: formData
