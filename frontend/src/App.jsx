@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 
@@ -6,19 +6,19 @@ function App() {
 
   const [file, setFile] = useState(null);
 
-  const [protocol, setProtocol] = useState("stop-and-wait");
+const [packetSize, setPacketSize] = useState(30);
 
-  const [packetSize, setPacketSize] = useState(30);
+const [lossRate, setLossRate] = useState(20);
 
-  const [lossRate, setLossRate] = useState(20);
+const [timeout, setTimeoutValue] = useState(0.01);
 
-  const [timeout, setTimeoutValue] = useState(0.01);
+const [result, setResult] = useState(null);
 
-  const [result, setResult] = useState(null);
+const [loading, setLoading] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+const [currentEventIndex, setCurrentEventIndex] = useState(-1);
 
-
+const [isSimulating, setIsSimulating] = useState(false);
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
@@ -72,7 +72,45 @@ function App() {
     }
   };
 
+useEffect(() => {
 
+  if (
+    !result ||
+    !result.transfer_log ||
+    result.transfer_log.length === 0
+  ) {
+    return;
+  }
+
+  setCurrentEventIndex(0);
+  setIsSimulating(true);
+
+  const interval = setInterval(() => {
+
+    setCurrentEventIndex((previousIndex) => {
+
+      const nextIndex = previousIndex + 1;
+
+      if (nextIndex >= result.transfer_log.length) {
+
+        clearInterval(interval);
+
+        setIsSimulating(false);
+
+        return previousIndex;
+      }
+
+      return nextIndex;
+
+    });
+
+  }, 700);
+
+  return () => {
+    clearInterval(interval);
+  };
+
+}, [result]);
   const getEventLabel = (event) => {
 
     const labels = {
@@ -154,7 +192,61 @@ function App() {
     }
 
     return "All packets delivered successfully";
+     
   };
+  const getSimulationClass = () => {
+
+    if (
+      !result ||
+      !result.transfer_log ||
+      currentEventIndex < 0 ||
+      currentEventIndex >= result.transfer_log.length
+    ) {
+      return "";
+    }
+
+    const event = result.transfer_log[currentEventIndex].event;
+
+    if (
+      event === "DATA_SENT" ||
+      event === "RETRANSMISSION"
+    ) {
+      return "moving-packet data-forward";
+    }
+
+    if (
+      event === "DATA_RECEIVED"
+    ) {
+      return "moving-packet data-arrived";
+    }
+
+    if (
+      event === "ACK_GENERATED"
+    ) {
+      return "moving-packet ack-start";
+    }
+
+    if (
+      event === "ACK_RECEIVED"
+    ) {
+      return "moving-packet ack-back";
+    }
+
+    if (
+      event === "DATA_LOST"
+    ) {
+      return "moving-packet data-lost";
+    }
+
+    if (
+      event === "ACK_LOST"
+    ) {
+      return "moving-packet ack-lost";
+    }
+
+    return "";
+  };
+  
   return (
 
     <div className="app">
@@ -189,22 +281,13 @@ function App() {
           />
 
 
-          <label>
-            Protocol
-          </label>
+         <label>
+  Protocol
+</label>
 
-          <select
-            value={protocol}
-            onChange={(event) =>
-              setProtocol(event.target.value)
-            }
-          >
-
-            <option value="stop-and-wait">
-              Stop-and-Wait ARQ
-            </option>
-
-          </select>
+<div className="protocol-display">
+  Stop-and-Wait ARQ
+</div>
 
 
           <label>
@@ -268,9 +351,42 @@ function App() {
             <section className="card">
 
               <h2>Network Flow</h2>
+{result &&
+  result.transfer_log &&
+  currentEventIndex >= 0 &&
+  currentEventIndex < result.transfer_log.length && (
 
+    <div className="simulation-status">
+
+      <strong>
+        Packet {result.transfer_log[currentEventIndex].sequence_number}
+      </strong>
+
+      <span>
+        {getEventLabel(
+          result.transfer_log[currentEventIndex].event
+        )}
+      </span>
+
+    </div>
+
+)}
               <div className="network-flow">
-
+<div
+  key={currentEventIndex}
+  className={getSimulationClass()}
+>
+  {result &&
+    result.transfer_log &&
+    currentEventIndex >= 0 &&
+    currentEventIndex < result.transfer_log.length && (
+      <>
+        {result.transfer_log[currentEventIndex].event.includes("ACK")
+          ? "ACK"
+          : "●"}
+      </>
+    )}
+</div>
                 <div className="network-node">
 
                   <div className="node-icon">

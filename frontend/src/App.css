@@ -314,3 +314,228 @@ button:disabled {
 .ack-arrow {
   font-size: 18px;
 }
+.simulation-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+
+  margin: 20px 0;
+  padding: 12px 18px;
+
+  background: #f3f4f6;
+  border-radius: 8px;
+
+  font-size: 14px;
+}
+
+.simulation-status strong {
+  font-size: 16px;
+}
+
+.simulation-status span {
+  color: #374151;
+}
+/* Packet simulation animation */
+
+.network-flow {
+  position: relative;
+}
+
+.moving-packet {
+  position: absolute;
+
+  top: 42%;
+
+  width: 42px;
+  height: 42px;
+
+  margin-top: -21px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  font-size: 11px;
+  font-weight: bold;
+
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+
+/* DATA: Sender → Receiver */
+
+.data-forward {
+  background: #2563eb;
+  color: white;
+
+  animation: dataForward 0.7s linear forwards;
+}
+
+@keyframes dataForward {
+
+  0% {
+    left: 15%;
+    opacity: 1;
+  }
+
+  45% {
+    left: 50%;
+    opacity: 1;
+  }
+
+  100% {
+    left: 85%;
+    opacity: 1;
+  }
+
+}
+@keyframes dataForward {
+
+  0% {
+    left: 8%;
+    opacity: 1;
+  }
+
+  45% {
+    left: 48%;
+    opacity: 1;
+  }
+
+  100% {
+    left: 82%;
+    opacity: 1;
+  }
+
+}
+
+
+/* DATA reached receiver */
+
+.data-arrived {
+  background: #16a34a;
+  color: white;
+
+  left: 82%;
+
+  animation: packetArrived 0.7s ease-in-out;
+}
+
+@keyframes packetArrived {
+
+  0% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+}
+
+
+/* ACK: Receiver → Sender */
+
+.ack-start,
+.ack-back {
+  background: #7c3aed;
+  color: white;
+}
+
+
+/* ACK starts from receiver and travels backward */
+
+.ack-start {
+  left: 85%;
+
+  animation: ackBack 0.7s linear forwards;
+}
+
+.ack-back {
+  left: 15%;
+
+  animation: ackReceived 0.7s ease-in-out;
+}
+
+@keyframes ackBack {
+
+  0% {
+    left: 82%;
+    opacity: 1;
+  }
+
+  100% {
+    left: 8%;
+    opacity: 1;
+  }
+
+}
+
+@keyframes ackReceived {
+
+  0% {
+    transform: scale(0.7);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+
+}
+
+
+/* Lost packet */
+
+.data-lost,
+.ack-lost {
+  background: #dc2626;
+  color: white;
+
+  animation: packetLost 0.7s ease-in forwards;
+}
+
+@keyframes packetLost {
+
+  0% {
+    left: 8%;
+    opacity: 1;
+  }
+
+  50% {
+    left: 48%;
+    opacity: 1;
+  }
+
+  100% {
+    left: 48%;
+    opacity: 0;
+    transform: scale(0.4);
+  }
+
+}
+.protocol-display {
+  padding: 10px 12px;
+  margin-bottom: 15px;
+
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+
+  color: #374151;
+  font-size: 14px;
+}
